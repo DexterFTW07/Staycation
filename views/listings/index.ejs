@@ -1,0 +1,91 @@
+<% layout("layout/boilerplate") %>
+    <div class="filter">
+        <div class="icons mb-3">
+            <div class="rooms-icon">
+                <i class="fa-solid fa-bed"></i><br>
+                <p>Rooms</p>
+            </div>
+
+            <div class="rooms-icon">
+                <i class="fa-brands fa-square-font-awesome-stroke"></i><br>
+                <p>Icons</p>
+            </div>
+
+            <div class="rooms-icon">
+                <i class="fa-solid fa-igloo"></i><br>
+                <p>Cabins</p>
+            </div>
+
+            <div class="rooms-icon">
+                <i class="fa-solid fa-panorama"></i><br>
+                <p>CountrySide</p>
+            </div>
+
+            <div class="rooms-icon">
+                <i class="fa-solid fa-campground"></i><br>
+                <p>Camping</p>
+            </div>
+
+            <div class="rooms-icon">
+                <i class="fa-solid fa-tractor"></i><br>
+                <p>Farms</p>
+            </div>
+
+            <div class="rooms-icon">
+                <i class="fa-solid fa-water-ladder"></i><br>
+                <p>Pools</p>
+            </div>
+
+            <div class="rooms-icon">
+                <i class="fa-solid fa-mountain-sun"></i><br>
+                <p>Amazing Views</p>
+            </div>
+        </div>
+        <div class="tax-toggle">
+            <div class="form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Display Taxes</label>
+            </div>
+        </div>
+        
+    </div>
+
+    <% if(allListings.length>0) { %>
+        <h4>Search query for: <%= search %></h4>
+        <% } else { %>
+        <h4>Listing related to Search: <%= search %> not found</h4>
+        <% } %>
+     <br>
+
+    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-1">
+        <% for (let listing of allListings) { %>
+            <a href="/listings/<%=listing._id%>" class="listing-links">
+                <div class="listing-card col">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_img" style="height: 15rem;">
+                    <div class="card-body">
+                        <p class="card-text"><b>
+                                <%= listing.title %>
+                            </b>
+                        </p>
+                        <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %>/ night &nbsp; &nbsp;<i
+                                    class="tax">+ &#8377;<%= listing.price * 0.18 %> gst</i></p>
+
+                    </div>
+                </div>
+            </a>
+            <% } %>
+    </div>
+
+    <script>
+        let taxToggle = document.getElementById("flexSwitchCheckDefault")
+        taxToggle.addEventListener("click", () => {
+           let taxInfo = document.getElementsByClassName("tax")
+           for(info of taxInfo){
+            if(info.style.display != "inline"){
+                 info.style.display = "inline"
+            } else {
+                info.style.display = "none"
+            }
+           }
+        })
+    </script>
